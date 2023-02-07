@@ -1,0 +1,3 @@
+[submodule "Open-Typer"]
+	path = Open-Typer
+	url = https://github.com/Open-Typer/Open-Typer.git
