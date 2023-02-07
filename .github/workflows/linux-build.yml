@@ -1,0 +1,34 @@
+name: Linux build
+
+on:
+  push:
+    branches: '*'
+    tags: '*'
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        qt-version: ['5.12.8', '5.15.2', '6.4.2']
+        qt-target: ['desktop']
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: true
+    ## Install Qt
+    - name: Install Qt (Ubuntu)
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${{ matrix.qt-version }}
+        host: 'linux'
+        target: ${{ matrix.qt-target }}
+    ## Build
+    - name: Build
+      run: |
+        qmake
+        make -j$(nproc --all)
+      shell: bash

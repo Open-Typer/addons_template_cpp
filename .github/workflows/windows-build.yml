@@ -1,0 +1,49 @@
+name: Windows build
+
+on:
+  push:
+    branches: '*'
+    tags: '*'
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            qt-version: '5.15.2'
+            qt-target: 'desktop'
+            qt-mingw-version: 81
+            mingw-version: '8.1.0'
+          - os: windows-latest
+            qt-version: '6.4.2'
+            qt-target: 'desktop'
+            qt-mingw-version: ''
+            mingw-version: '11.2.0'
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: true
+    ## Install Qt
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${{ matrix.qt-version }}
+        host: 'windows'
+        arch: 'win64_mingw${{ matrix.qt-mingw-version }}'
+        target: ${{ matrix.qt-target }}
+    - name: Install MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x64
+        version: ${{ matrix.mingw-version }}
+    ## Build
+    - name: Build
+      run: |
+        qmake
+        mingw32-make.exe -j4
+      shell: bash
