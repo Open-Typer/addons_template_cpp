@@ -17,6 +17,7 @@ TARGET = opentyper-addon-template
 TEMPLATE = lib
 
 CONFIG += c++17
+QMAKE_CXXFLAGS += "-fno-sized-deallocation"
 
 INCLUDEPATH += \
     src \
