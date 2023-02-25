@@ -1,6 +1,8 @@
-# Open-Typer addon template
+# Open-Typer C++ addon template
 
-This template can be used to quickly create addons for Open-Typer.
+This template can be used to quickly create C++ addons for Open-Typer.
+
+**Note:** This template is used only for some of the official addons. If you want to avoid compiling multiple times, write the addon in QML (support for this is coming soon).
 
 Before using this template, rename the `template.pro` file and change the
 library name in this file. Then, rename the TemplateAddon namespace in
