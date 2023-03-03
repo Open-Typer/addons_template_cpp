@@ -139,4 +139,5 @@ jobs:
         artifacts: "build-ubuntu*/*.so,build-windows*/*.dll,build-macos*/*.dylib"
         name: "Template addon ${{ github.ref_name }}"
         owner: ${{ github.event.pusher.name }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         draft: true
